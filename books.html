@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books</title>
+    
+    <link href="css/site.css" rel="stylesheet">
+    <link href="css/books.css" rel="stylesheet">
+    <link href="css/tablesorter.theme.default.css" rel="stylesheet"> 
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#">Books</a>
+            <a href="users.html">Users</a>
+            <a href="admin.html">Admin</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Books  <img data-src="img/spinner.gif"></h1>
+        <div class="tableContainer tablesorter-default">
+            <table id="booksTable" style="display:none">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Year</th>
+                        <th>Available</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="checkoutSelectionContainer" style="display:none">
+            <label>User:</label>
+            <div>
+                <select></select>
+                <div id="checkoutButtonContainer">
+                    <img src="img/spinner.gif" style="display:none">
+                    <button disabled>Check Out&nbsp;</button>
+                </div>
+            </div>
+            <p class="responseMessage"></p>
+        </div>
+    </main>
+    
+    <footer>
+    &copy; 2014
+    </footer>
+</body>
+</html>

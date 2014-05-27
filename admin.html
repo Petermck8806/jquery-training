@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+    
+    <link href="css/site.css" rel="stylesheet">
+    <link href="css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="books.html">Books</a>
+            <a href="users.html">Users</a>
+            <a href="#">Admin</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Create New User  <img data-src="img/spinner.gif"></h1>
+        <form id="newUserForm" method="POST"  action="">
+            <p>
+                <label>User Name:</label>
+                <input type="text" name="nameUserInput" />
+            </p>
+            <p>
+                <label>First Name:</label>
+                <input type="text" name="nameFirstInput" />
+            </p>
+            <p>
+                <label>Last Name:</label>
+                <input type="text" name="nameLastInput" />
+            </p> 
+            <p>
+                <label>Birthday <em>(yyyy-mm-dd)</em>:</label>
+                <input type="text" name="birthdayInput" />
+            </p>            
+            <p>
+                <label>Gender:</label>
+                <select name="genderSelection" >
+                    <option value="0">-- Select One --</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                </select>
+            </p>
+            <p>
+                <label>Email:</label>
+                <input type="text" name="emailInput" />
+            </p>
+            <p>
+                <label>Confirm Email:</label>
+                <input type="text" name="emailConfirmInput" />
+            </p> 
+            <p>
+                <input type='submit' value="Create New User"/>
+                <img src="img/spinner.gif" style="display:none">
+            </p>
+        </form>
+        <p class="responseMessage"></p>
+    </main>
+    
+    <footer>
+    &copy; 2014
+    </footer>
+</body>
+</html>

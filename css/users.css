@@ -1,0 +1,58 @@
+#userInfo {
+    display: inline-block;
+    margin-left: 25px;
+    vertical-align: top;
+    width: 40%
+}
+
+#userInfo > div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#userInfo dl {
+    margin-top: 0;
+}
+#userInfo dl > dt {
+    border-bottom: 1px solid #a0a0a0;
+    font-style: italic;
+}
+#userInfo dl > dd {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+#userInfo h2 {
+    margin-top: 0;
+}
+#userInfo figure {
+    margin: 0 10px 10px 0;
+    text-align: center;
+}
+
+#userInfo .books  dd {
+    text-align: left;
+    margin-left: 0;
+}
+#userInfo .books ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#userInfo .books li {
+    margin: 0;
+}
+#userInfo .books li:hover {
+    background-color: #FFFFD0; 
+}
+
+#userInfo .books div.title{
+    display: inline-block;
+    width:75%;
+}
+#userInfo .books div.checkin{
+    display: inline-block;
+    width:20%;
+    font-size:.80em;
+    vertical-align: top;
+}

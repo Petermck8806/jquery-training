@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Users</title>
+    
+    <link href="css/site.css" rel="stylesheet">
+    <link href="css/users.css" rel="stylesheet">
+    <link href="css/tablesorter.theme.default.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="books.html">Books</a>
+            <a href="#">Users</a>
+            <a href="admin.html">Admin</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Users  <img data-src="img/spinner.gif"></h1>
+        <div class="tableContainer">
+            <table id="userTable" class="tablesorter-default"  style="display:none">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Last</th>
+                        <th>First</th>
+                        <th>Books</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="userInfo" style="display:none">
+            <h2></h2>
+            <div>
+                <figure>
+                    <img data-path="img/" data-img-unknown="question-48x48.png"
+					                      data-img-female="user-female-48x48.png"
+										  data-img-male="user-male-48x48.png"/>
+                    <figcaption></figcaption>
+                </figure>
+            </div>
+            <div>
+                <dl>
+                    <dt>Email</dt>
+                    <dd class="email"></dd>
+                    <dt>Birthday</dt>
+                    <dd class="birthday"></dd>
+                </dl>
+            </div>
+            <dl class="books">
+                <dt>Books</dt>
+                <dd><ul></ul></dd>
+            </dl>
+        </div>
+    </main>
+    
+    <footer>
+    &copy; 2014
+    </footer>
+</body>
+</html>

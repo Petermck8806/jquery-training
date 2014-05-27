@@ -1,0 +1,31 @@
+
+#checkoutSelectionContainer {
+    display: inline-block;
+    margin-left: 25px;
+    vertical-align: top;
+    width: 250px;
+}
+
+#checkoutSelectionContainer select {
+    width: 100%;
+}
+
+#checkoutSelectionContainer > div {
+    text-align: left;
+    margin-top: 10px;
+}
+
+#checkoutSelectionContainer label {
+    font-weight: bold;
+}
+
+#checkoutButtonContainer {
+    text-align: right;
+}
+
+td.status {
+    background: url('../img/x-16x16.png') transparent no-repeat center;
+}
+td.status.available { 
+    background: url('../img/check-16x16.png') transparent no-repeat center;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Users</title>
+    
+    <link href="../css/site.css" rel="stylesheet">
+    <link href="../css/users.css" rel="stylesheet">
+    <link href="../css/tablesorter.theme.default.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="books.html">Books</a>
+            <a href="#">Users</a>
+            <a href="admin.html">Admin</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Users  <img data-src="../img/spinner.gif"></h1>
+        <div class="tableContainer">
+            <table id="userTable" class="tablesorter-default">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Last</th>
+                        <th>First</th>
+                        <th>Books</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-userid="5">
+                        <td>
+                            <a href="#">bgardner</a>
+                        </td>
+                        <td>Fields</td>
+                        <td>Craig</td>
+                        <td>0</td>
+                    </tr>                
+                    <tr data-userid="15">
+                        <td>
+                            <a href="#">pmitchell</a>
+                        </td>
+                        <td>Edwards</td>
+                        <td>Samuel</td>
+                        <td>3</td>
+                    </tr>
+                    <tr data-userid="26" class="selected">
+                        <td>
+                            <a href="#">cmyers</a>
+                        </td>
+                        <td>Cruz</td>
+                        <td>Antonio</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="userInfo">
+            <h2>Antonio Cruz</h2>
+            <div>
+                <figure>
+                    <img data-path="img/" data-img-unknown="question-48x48.png"
+					                      data-img-female="user-female-48x48.png"
+										  data-img-male="user-male-48x48.png"
+							src="../img/user-male-48x48.png">
+                    <figcaption>cmyers</figcaption>
+                </figure>
+            </div>
+            <div>
+                <dl>
+                    <dt>Email</dt>
+                    <dd class="email">acruz@skyble.org</dd>
+                    <dt>Birthday</dt>
+                    <dd class="birthday">1995-03-23</dd>
+                </dl>
+            </div>
+            <dl class="books">
+                <dt>Books</dt>
+                <dd>
+                    <ul>
+                        <li data-bookid="37">
+                            <div class="title">The Killer Angels (1975)</div>
+                            <div class="checkin"><img src="../img/spinner.gif"></div>
+                        </li>
+                        <li data-bookid="15">
+                            <div class="title">American Pastoral (1998)</div>
+                            <div class="checkin"><a href="#">Check In</a></div>
+                        </li>
+                        <li data-bookid="15">
+                            <div class="title">Rabbit At Rest (1991)</div>
+                            <div class="checkin"><img src="../img/spinner.gif"></div>
+                        </li>                        
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+    </main>
+    
+    <footer>
+    &copy; 2014
+    </footer>
+
+</body>
+</html>

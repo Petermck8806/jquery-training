@@ -1,0 +1,22 @@
+
+
+#newUserForm label {
+    display: inline-block;
+    width: 200px;
+}
+
+#newUserForm label.error { 
+    display: inline;
+    width: inherit;
+}
+
+label.error , p.error{
+    color: red;
+    font-weight: bold;
+}
+
+input.error,
+select.error {
+    background-color: #F8CCCC;
+    border: 1px solid red;
+}
