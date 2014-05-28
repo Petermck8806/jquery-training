@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Admin</title>
-    
+    <script src="./js/jquery-1.11.1.js"></script>
     <link href="css/site.css" rel="stylesheet">
     <link href="css/admin.css" rel="stylesheet">
 </head>
@@ -28,11 +28,11 @@
             <p>
                 <label>Last Name:</label>
                 <input type="text" name="nameLastInput" />
-            </p> 
+            </p>
             <p>
                 <label>Birthday <em>(yyyy-mm-dd)</em>:</label>
                 <input type="text" name="birthdayInput" />
-            </p>            
+            </p>
             <p>
                 <label>Gender:</label>
                 <select name="genderSelection" >
@@ -48,17 +48,38 @@
             <p>
                 <label>Confirm Email:</label>
                 <input type="text" name="emailConfirmInput" />
-            </p> 
+            </p>
             <p>
-                <input type='submit' value="Create New User"/>
+                <input type='submit' value="Create New User" onclick="OnCreateUser()"/>
                 <img src="img/spinner.gif" style="display:none">
             </p>
         </form>
         <p class="responseMessage"></p>
     </main>
-    
+
     <footer>
     &copy; 2014
     </footer>
+<script>
+    function OnCreateUser(){
+        alert('creating user...');
+
+        var request = $.ajax({
+            url: "http://localhost:9090/api/users/new",
+            type: "POST",
+            data:
+            {
+                userName: "Peter",
+                firstName: "Peter",
+                lastName: "McKinney",
+                email: "pmckinney8806@gmail.com",
+                gender: "Male",
+                birthday: "1988-07-16"
+            }
+        });
+
+        alert('user created.');
+    }
+</script>
 </body>
 </html>

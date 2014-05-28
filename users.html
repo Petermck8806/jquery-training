@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Users</title>
-    
+    <script src="./js/jquery-1.11.1.js"></script>
     <link href="css/site.css" rel="stylesheet">
     <link href="css/users.css" rel="stylesheet">
     <link href="css/tablesorter.theme.default.css" rel="stylesheet">
@@ -55,9 +55,14 @@
             </dl>
         </div>
     </main>
-    
+
     <footer>
     &copy; 2014
     </footer>
+<script>
+    $(document).ready( function() {
+        $.get("http://localhost:9000/api/users","json");
+    });
+</script>
 </body>
 </html>
