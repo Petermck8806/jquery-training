@@ -60,8 +60,24 @@
     &copy; 2014
     </footer>
 <script>
+    //pmckinney function to load users on doc ready.
     $(document).ready( function() {
-        $.get("http://localhost:9000/api/users","json");
+        $.getJSON("http://localhost:9000/api/users",
+             function (json) {
+                 var tr;
+                 var x = json.data[0].userName;
+
+                 for(var i = 0; i < json.length; i++){
+                     tr=$('</tr>');
+                     tr.append("<tr>");
+                     tr.append("<td>" + json.data[i].userName + "</td>");
+                     tr.append("<td>" + json.data[i].lastName + "</td>");
+                     tr.append("<td>" + json.data[i].firstName + "</td>");
+                     tr.append("<td>" + json.data[i].bookCount + "</td>");
+                     tr('userTable').append(tr);
+                 }
+             });
+        $('#userTable').show();
     });
 </script>
 </body>
