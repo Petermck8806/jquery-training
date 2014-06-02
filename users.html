@@ -60,35 +60,51 @@
     &copy; 2014
     </footer>
 <script>
+
+   //displays the spinner icon once the checkin button is clicked. Removes the
+   //book from the user's book list.
+   function OnCheckInClick(bookId){
+       //remove the link from the checkin div and append the spinner image
+       var li = $("li[data-bookid='" + bookId + "'] div").last();
+       li.empty().append("<img src='../img/spinner.gif'>");
+   }
+
+
    //displays user information on link click of the username
    function displayUser(userId){
         var xhr = $.getJSON("http://localhost:9000/api/users/" + userId);
         xhr.done(function(data){
 
+            //remove the selected row and set the current row as selected
+            $('#userTable tr').removeClass('selected');
+            $("tr[data-userid='" + userId + "']").addClass('selected');
+
+            //add user information
             $('#userInfo h2').empty().append(data.data.firstName + " " + data.data.lastName);
             //$('#userInfo div figure figcaption').append(data.data.userName);
             $('.email').empty().append(data.data.email);
             $('.birthday').empty().append(data.data.birthday);
 
-            //pmckinney need to add books to the user info section
+            //add books to user information section
             var list = $('.books dd ul');
             list.empty();
 
             for(var i = 0; i < data.data.books.length; i++){
                 list.append("<li data-bookid='" + data.data.books[i].id + "'><div class='title'>"
-                    + data.data.books[i].title + "</div>");
-                list.append("<div class='checkin'><a href='#'>Check In</a></div></li>");
+                    + data.data.books[i].title + "</div><div class='checkin'><a href='#' onclick='OnCheckInClick("
+                            + data.data.books[i].id + ");'>Check In</a></div></li>");
             }
-
+            //display userinfo section.
             $('#userInfo').show();
         });
     }
-
 
     //pmckinney function to load users on doc ready.
     $(document).ready( function() {
         var xhr = $.getJSON("http://localhost:9000/api/users");
         xhr.done(function(data){
+
+            //for each user, create a new table row in the userTable
             for(var i = 0; i < data.data.length; i++){
                 var newRow = "<tr data-userid='" + data.data[i].id + "'>"
                     + "<td><a href='#' onclick='displayUser(" + data.data[i].id + ");'>"
@@ -98,10 +114,14 @@
                     + "<td>" + data.data[i].bookCount + "</td></tr>";
                 $('#userTable tbody').append(newRow);
             }
+            //display the user table
             $('#userTable').show();
         });
     });
 
+    function checkInBook(bookId){
+        //POST a check in.
+    }
 
 </script>
 </body>
