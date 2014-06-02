@@ -6,6 +6,7 @@
     <link href="./css/site.css" rel="stylesheet">
     <link href="./css/users.css" rel="stylesheet">
     <link href="./css/tablesorter.theme.default.css" rel="stylesheet">
+    <script src="./js/jquery.tablesorter.js"></script>
 </head>
 <body>
     <header>
@@ -116,7 +117,7 @@
     }
 
     //pmckinney function to load users on doc ready.
-    $(document).ready( function displayAllUsers() {
+    $( function() {
         var xhr = $.getJSON("http://localhost:9000/api/users");
         xhr.done(function(data){
 
@@ -130,8 +131,9 @@
                     + "<td>" + data.data[i].bookCount + "</td></tr>";
                 $('#userTable tbody').append(newRow);
             }
-            //display the user table
+            //display the user table and call tablesorter plugin
             $('#userTable').show();
+            $('#userTable').tablesorter();
         });
     });
 
