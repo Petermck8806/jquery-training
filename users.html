@@ -63,12 +63,12 @@
 
    //displays the spinner icon once the checkin button is clicked. Removes the
    //book from the user's book list.
-   function OnCheckInClick(bookId){
+   function OnCheckInClick(bookId,userId){
        //remove the link from the checkin div and append the spinner image
        var li = $("li[data-bookid='" + bookId + "'] div").last();
        li.empty().append("<img src='../img/spinner.gif'>");
 
-       checkInBook(bookId);
+       checkInBook(bookId,userId);
    }
 
 
@@ -87,6 +87,20 @@
             $('.email').empty().append(data.data.email);
             $('.birthday').empty().append(data.data.birthday);
 
+            //set user image based on gender
+            switch(data.data.gender){
+                case "Male":
+                    $('figure img').attr("src","./img/user-male-48x48.png");
+                    break;
+                case "Female":
+                    $('figure img').attr("src","./img/user-female-48x48.png");
+                    break;
+                default:
+                    $('figure img').attr("src","./img/question-48x48.png");
+                    break;
+            }
+
+
             //add books to user information section
             var list = $('.books dd ul');
             list.empty();
@@ -94,7 +108,7 @@
             for(var i = 0; i < data.data.books.length; i++){
                 list.append("<li data-bookid='" + data.data.books[i].id + "'><div class='title'>"
                     + data.data.books[i].title + "</div><div class='checkin'><a href='#' onclick='OnCheckInClick("
-                            + data.data.books[i].id + ");'>Check In</a></div></li>");
+                            + data.data.books[i].id + "," + data.data.id + ");'>Check In</a></div></li>");
             }
             //display userinfo section.
             $('#userInfo').show();
@@ -102,7 +116,7 @@
     }
 
     //pmckinney function to load users on doc ready.
-    $(document).ready( function() {
+    $(document).ready( function displayAllUsers() {
         var xhr = $.getJSON("http://localhost:9000/api/users");
         xhr.done(function(data){
 
@@ -121,9 +135,20 @@
         });
     });
 
-    function checkInBook(bookId){
+    function checkInBook(bookId, userId){
         //POST a check in.
-    }
+
+        $.post("http://localhost:9000/api/library/checkin", { id: bookId })
+            .done(function(){
+                $("li[data-bookid='" + bookId + "']").remove();
+
+                var counts = $("tr[data-userid='" + userId + "'] td").last();
+                var updatedCount = counts.text() - 1;
+
+                counts.empty();
+                counts.append(updatedCount);
+            });
+    };
 
 </script>
 </body>
