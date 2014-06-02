@@ -3,9 +3,9 @@
 <head>
     <title>Users</title>
     <script src="./js/jquery-1.11.1.js"></script>
-    <link href="css/site.css" rel="stylesheet">
-    <link href="css/users.css" rel="stylesheet">
-    <link href="css/tablesorter.theme.default.css" rel="stylesheet">
+    <link href="./css/site.css" rel="stylesheet">
+    <link href="./css/users.css" rel="stylesheet">
+    <link href="./css/tablesorter.theme.default.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -60,25 +60,49 @@
     &copy; 2014
     </footer>
 <script>
+   //displays user information on link click of the username
+   function displayUser(userId){
+        var xhr = $.getJSON("http://localhost:9000/api/users/" + userId);
+        xhr.done(function(data){
+
+            $('#userInfo h2').empty().append(data.data.firstName + " " + data.data.lastName);
+            //$('#userInfo div figure figcaption').append(data.data.userName);
+            $('.email').empty().append(data.data.email);
+            $('.birthday').empty().append(data.data.birthday);
+
+            //pmckinney need to add books to the user info section
+            var list = $('.books dd ul');
+            list.empty();
+
+            for(var i = 0; i < data.data.books.length; i++){
+                list.append("<li data-bookid='" + data.data.books[i].id + "'><div class='title'>"
+                    + data.data.books[i].title + "</div>");
+                list.append("<div class='checkin'><a href='#'>Check In</a></div></li>");
+            }
+
+            $('#userInfo').show();
+        });
+    }
+
+
     //pmckinney function to load users on doc ready.
     $(document).ready( function() {
-        $.getJSON("http://localhost:9000/api/users",
-             function (json) {
-                 var tr;
-                 var x = json.data[0].userName;
-
-                 for(var i = 0; i < json.length; i++){
-                     tr=$('</tr>');
-                     tr.append("<tr>");
-                     tr.append("<td>" + json.data[i].userName + "</td>");
-                     tr.append("<td>" + json.data[i].lastName + "</td>");
-                     tr.append("<td>" + json.data[i].firstName + "</td>");
-                     tr.append("<td>" + json.data[i].bookCount + "</td>");
-                     tr('userTable').append(tr);
-                 }
-             });
-        $('#userTable').show();
+        var xhr = $.getJSON("http://localhost:9000/api/users");
+        xhr.done(function(data){
+            for(var i = 0; i < data.data.length; i++){
+                var newRow = "<tr data-userid='" + data.data[i].id + "'>"
+                    + "<td><a href='#' onclick='displayUser(" + data.data[i].id + ");'>"
+                    + data.data[i].userName + "</a></td>"
+                    + "<td>" + data.data[i].lastName + "</td>"
+                    + "<td>" + data.data[i].firstName + "</td>"
+                    + "<td>" + data.data[i].bookCount + "</td></tr>";
+                $('#userTable tbody').append(newRow);
+            }
+            $('#userTable').show();
+        });
     });
+
+
 </script>
 </body>
 </html>
