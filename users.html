@@ -67,6 +67,8 @@
        //remove the link from the checkin div and append the spinner image
        var li = $("li[data-bookid='" + bookId + "'] div").last();
        li.empty().append("<img src='../img/spinner.gif'>");
+
+       checkInBook(bookId);
    }
 
 
