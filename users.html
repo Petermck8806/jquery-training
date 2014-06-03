@@ -62,6 +62,28 @@
     </footer>
 <script>
 
+    //pmckinney function to load users on doc ready.
+    $( function() {
+        var xhr = $.getJSON("http://localhost:9000/api/users");
+        xhr.done(function(data){
+
+            //for each user, create a new table row in the userTable
+            for(var i = 0; i < data.data.length; i++){
+                var newRow = "<tr data-userid='" + data.data[i].id + "'>"
+                    + "<td><a href='#' onclick='displayUser(" + data.data[i].id + ");'>"
+                    + data.data[i].userName + "</a></td>"
+                    + "<td>" + data.data[i].lastName + "</td>"
+                    + "<td>" + data.data[i].firstName + "</td>"
+                    + "<td>" + data.data[i].bookCount + "</td></tr>";
+                $('#userTable tbody').append(newRow);
+            }
+            //display the user table and call tablesorter plugin
+            $('#userTable').show();
+            $('#userTable').tablesorter();
+        });
+    });
+
+
    //displays the spinner icon once the checkin button is clicked. Removes the
    //book from the user's book list.
    function OnCheckInClick(bookId,userId){
@@ -116,26 +138,6 @@
         });
     }
 
-    //pmckinney function to load users on doc ready.
-    $( function() {
-        var xhr = $.getJSON("http://localhost:9000/api/users");
-        xhr.done(function(data){
-
-            //for each user, create a new table row in the userTable
-            for(var i = 0; i < data.data.length; i++){
-                var newRow = "<tr data-userid='" + data.data[i].id + "'>"
-                    + "<td><a href='#' onclick='displayUser(" + data.data[i].id + ");'>"
-                    + data.data[i].userName + "</a></td>"
-                    + "<td>" + data.data[i].lastName + "</td>"
-                    + "<td>" + data.data[i].firstName + "</td>"
-                    + "<td>" + data.data[i].bookCount + "</td></tr>";
-                $('#userTable tbody').append(newRow);
-            }
-            //display the user table and call tablesorter plugin
-            $('#userTable').show();
-            $('#userTable').tablesorter();
-        });
-    });
 
     function checkInBook(bookId, userId){
         //POST a check in.

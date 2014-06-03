@@ -2,10 +2,11 @@
 <html>
 <head>
     <title>Books</title>
-    
+    <script src="./js/jquery-1.11.1.js"></script>
+    <script src="./js/jquery.tablesorter.js"></script>
     <link href="css/site.css" rel="stylesheet">
     <link href="css/books.css" rel="stylesheet">
-    <link href="css/tablesorter.theme.default.css" rel="stylesheet"> 
+    <link href="css/tablesorter.theme.default.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -43,9 +44,53 @@
             <p class="responseMessage"></p>
         </div>
     </main>
-    
+
     <footer>
     &copy; 2014
     </footer>
+<script type="text/javascript">
+
+    //load all books on doc ready
+    $(function() {
+        var xhr = $.getJSON("http://localhost:9000/api/books");
+        xhr.done(function(data){
+
+            for(var i = 0; i < data.data.length; i++){
+                var tdStatus = data.data[i].isCheckedOut == true ? "<td class='status'></td>"
+                    : "<td class='status available'></td>";
+
+                var row = "<tr data-bookid='" + data.data[i].id + "'><td><a href='#' onclick='selectBook("
+                + data.data[i].id
+                + ")'>" + data.data[i].title + "</a></td>"
+                + "<td>" + data.data[i].author + "</td>"
+                + "<td>" + data.data[i].year + "</td>"
+                + tdStatus + "</tr>";
+
+                $('#booksTable tbody').append(row);
+            }
+            $('#booksTable').show();
+            $('#booksTable').tablesorter();
+        });
+
+        var users = $.getJSON("http://localhost:9000/api/users");
+        users.done(function(data){
+            for(var i = 0; i < data.data.length; i++){
+                var row = "<option>" + data.data[i].firstName + " "
+                + data.data[i].lastName + " (" + data.data[i].userName
+                + ")</option>";
+
+                $('select').append(row);
+            }
+
+            $('#checkoutSelectionContainer').show();
+        });
+    });
+
+    function selectBook(bookId){
+        $('#booksTable tr').removeClass('selected');
+        $("tr[data-bookid='" + bookId + "']").addClass('selected');
+        $('button').removeAttr('disabled');
+    }
+</script>
 </body>
 </html>
