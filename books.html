@@ -38,7 +38,7 @@
                 <select></select>
                 <div id="checkoutButtonContainer">
                     <img src="img/spinner.gif" style="display:none">
-                    <button disabled>Check Out&nbsp;</button>
+                    <button disabled onclick="checkOutBook()">Check Out&nbsp;</button>
                 </div>
             </div>
             <p class="responseMessage"></p>
@@ -49,7 +49,7 @@
     &copy; 2014
     </footer>
 <script type="text/javascript">
-
+    var selectedBook = null;
     //load all books on doc ready
     $(function() {
         var xhr = $.getJSON("http://localhost:9000/api/books");
@@ -78,10 +78,12 @@
             });
         });
 
+        //load users into select ddl
         var users = $.getJSON("http://localhost:9000/api/users");
         users.done(function(data){
             for(var i = 0; i < data.data.length; i++){
-                var row = "<option>" + data.data[i].firstName + " "
+                var row = "<option value='" + data.data[i].id + "'>"
+                + data.data[i].firstName + " "
                 + data.data[i].lastName + " (" + data.data[i].userName
                 + ")</option>";
 
@@ -95,9 +97,52 @@
     function selectBook(bookId){
         $('#booksTable tr').removeClass('selected');
         $("tr[data-bookid='" + bookId + "']").addClass('selected');
-        $('button').removeAttr('disabled');
+
+        if( $("tr[data-bookid='" + bookId + "'] td").last().hasClass('status available')){
+            $('button').removeAttr('disabled');
+            selectedBook = bookId;
+        }
+        else {
+            $('button').prop("disabled",true);
+            selectedBook = null;
+        }
     }
 
+    function checkOutBook(){
+        if(selectedBook != null){
+            var bookId = selectedBook;
+            var userId = $('select').find(":selected").val();
+            var button = $('button');
+            var select = $('select');
+            var response = $('.responseMessage');
+
+
+            button.prop('disabled',true);
+            select.prop('disabled',true);
+            response.removeClass('responseMessage');
+
+            $('#checkoutButtonContainer img').show();
+            $.post("http://localhost:9000/api/library/checkout", { bookId: bookId, userId: userId})
+                .done(function(){
+                    var td = $("tr[data-bookid='" + bookId + "'] td").last();
+                    td.removeClass('status available');
+                    td.addClass('status');
+
+                    button.removeAttr('disabled');
+                    select.removeAttr('disabled');
+
+                    $('#checkoutButtonContainer img').hide();
+
+                    response.addClass('responseMessage success');
+                })
+                .fail(function() {
+                    response.addClass('responseMessage error');
+                });
+            response.empty();
+            response.append("Server Response Message");
+            response.show();
+        }
+    }
 
     $.tablesorter.addParser({
         id: 'available',

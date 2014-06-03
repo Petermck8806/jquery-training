@@ -1,1 +1,2 @@
 Users.html - once the counts are updated, does the table need to sort correctly? Should we call the users api again at this point?
+Books.html - Is the server response message supposed to contain a message returned from the post/returned from the web server? Is it supposed to just contain the text "Server Response Message?".
