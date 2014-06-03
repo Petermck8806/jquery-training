@@ -69,7 +69,13 @@
                 $('#booksTable tbody').append(row);
             }
             $('#booksTable').show();
-            $('#booksTable').tablesorter();
+            $("#booksTable").tablesorter({
+                headers: {
+                    3: {
+                        sorter: 'available'
+                    }
+                }
+            });
         });
 
         var users = $.getJSON("http://localhost:9000/api/users");
@@ -91,6 +97,21 @@
         $("tr[data-bookid='" + bookId + "']").addClass('selected');
         $('button').removeAttr('disabled');
     }
+
+
+    $.tablesorter.addParser({
+        id: 'available',
+        is: function (s) {
+            return false;
+        },
+        format: function (s, table, cell) {
+            var $cell = $(cell);
+            return $cell.attr('class') || s;
+        },
+        type: 'text'
+    });
+
+
 </script>
 </body>
 </html>
