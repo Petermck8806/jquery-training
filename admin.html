@@ -37,7 +37,7 @@
             <p>
                 <label>Gender:</label>
                 <select name="genderSelection" >
-                    <option value="0">-- Select One --</option>
+                    <option value="">-- Select One --</option>
                     <option value="Female">Female</option>
                     <option value="Male">Male</option>
                 </select>
@@ -51,7 +51,7 @@
                 <input type="text" name="emailConfirmInput" />
             </p>
             <p>
-                <input type='submit' value="Create New User" onclick="OnCreateUser()"/>
+                <input type='submit' value="Create New User" />
                 <img src="img/spinner.gif" style="display:none">
             </p>
         </form>
@@ -62,7 +62,154 @@
     &copy; 2014
     </footer>
 <script>
+jQuery.validator.addMethod("accept",function(value,element,param){
+    return value.match(new RegExp("." + param + "$"));
+});
 
+$(function(){
+    var form = $('#newUserForm');
+
+    form.validate({
+        submitHandler: onSubmit,
+
+        messages: {
+            //element name
+            nameUserInput:{
+                required: "Please provide something",
+                minlength: "Must be at least {0} characters",
+                maxlength: "No more than {0} characters please",
+                accept: "Must be alphanumeric"
+            },
+
+            nameFirstInput:{
+                //rules
+                required: "Please provide something",
+                minlength: "Must be at least {0} characters",
+                maxlength: "That's way too long",
+                accept: "Must be alpha only"
+            },
+
+            nameLastInput:{
+                required: "Please provide something",
+                minlength: "Must be at least {0} characters",
+                maxlength: "That's way too long",
+                accept: "Must be alpha only"
+            },
+
+            birthdayInput:{
+                required: "What's your birthday?",
+                dateISO: "That's not your birthday"
+            },
+
+            genderSelection:{
+                required: "Guy or girl?"
+            },
+
+            emailInput:{
+            },
+
+            emailConfirmInput:{
+                equalTo: "Does not match given email"
+            }
+
+        },
+
+        rules: {
+            //element name
+            nameUserInput:{
+                  required: true,
+                  minlength: 4,
+                  maxlength: 12,
+                  accept: "[a-zA-Z0-9]+"
+            },
+
+            nameFirstInput:{
+                //rules
+                required: true,
+                minlength: 2,
+                maxlength: 15,
+                accept: "[a-zA-Z]+"
+            },
+
+            nameLastInput:{
+                required: true,
+                minlength: 2,
+                maxlength: 15,
+                accept: "[a-zA-Z]+"
+            },
+
+            birthdayInput:{
+                required: true,
+                dateISO: true
+            },
+
+            genderSelection:{
+                required: true
+            },
+
+            emailInput:{
+                required: true,
+                email: true
+            },
+
+            emailConfirmInput:{
+                required: true,
+                equalTo: '[name="emailInput"]'
+            }
+
+        }
+    });
+});
+
+function onSubmit(){
+    toggleInput(true.toString());
+
+    $.post("http://localhost:9000/api/users/new",
+           {
+               userName: $('[name="nameUserInput"]').val(),
+               firstName: $('[name="nameFirstInput"]').val(),
+               lastName: $('[name="nameLastInput"]').val(),
+               email: $('[name="emailInput"]').val(),
+               gender: $('[name="genderSelection"]').val(),
+               birthday: $('[name="birthdayInput"]').val()
+
+           })
+        .done(function(data){
+
+            toggleInput(false.toString());
+            alert("Recieved: " + data.message);
+
+        });
+}
+
+function toggleInput(toggle){
+
+    if(toggle == 'true') {
+        $('img').show();
+
+        $(':submit').prop('disabled',toggle);
+        $('[name="nameUserInput"]').prop('disabled',toggle);
+        $('[name="nameFirstInput"]').prop('disabled',toggle);
+        $('[name="nameLastInput"]').prop('disabled',toggle);
+        $('[name="emailInput"]').prop('disabled',toggle);
+        $('[name="emailConfirmInput"]').prop('disabled',toggle);
+        $('[name="genderSelection"]').prop('disabled',toggle);
+        $('[name="birthdayInput"]').prop('disabled',toggle);
+    }
+    else {
+        $('img').hide();
+
+        $(':submit').removeAttr('disabled');
+        $('[name="nameUserInput"]').removeAttr('disabled');
+        $('[name="nameFirstInput"]').removeAttr('disabled');
+        $('[name="nameLastInput"]').removeAttr('disabled');
+        $('[name="emailInput"]').removeAttr('disabled');
+        $('[name="emailConfirmInput"]').removeAttr('disabled');
+        $('[name="genderSelection"]').removeAttr('disabled');
+        $('[name="birthdayInput"]').removeAttr('disabled');
+    }
+
+}
 </script>
 </body>
 </html>
