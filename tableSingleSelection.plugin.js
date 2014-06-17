@@ -16,7 +16,7 @@
     if(!this.is('table')){
       table = this.children('table');
 
-      //do nothing and return if not table found
+      //do nothing and return if no table found
       if (table.length == 0) return this;
     }
     //we are a table, use it
@@ -24,7 +24,11 @@
       table = this;
     }
 
-    table.children(targetSelector).addClass('selected');
+    //add selected class to target if it exists.
+    var element = table.children(targetSelector);
+    if(element.length > 0){
+      element.addClass('selected');
+    }
 
     return this;
   };
