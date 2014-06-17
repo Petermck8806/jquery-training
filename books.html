@@ -119,28 +119,31 @@
 
             button.prop('disabled',true);
             select.prop('disabled',true);
+            response.empty();
             response.removeClass();
 
             $('#checkoutButtonContainer img').show();
             $.post("http://localhost:9000/api/library/checkout", { bookId: bookId, userId: userId})
-                .done(function(){
+                .done(function(data){
                     var td = $("tr[data-bookid='" + bookId + "'] td").last();
-                    td.removeClass('status available');
-                    td.addClass('status');
 
                     button.removeAttr('disabled');
                     select.removeAttr('disabled');
 
                     $('#checkoutButtonContainer img').hide();
 
-                    response.addClass('responseMessage success');
+                    if(data.status){
+                        response.addClass('responseMessage success');
+                        td.removeClass('status available');
+                        td.addClass('status');
+                    }
+                    else{
+                        response.addClass('responseMessage error');
+                    }
+
+                    response.append(data.message);
+                    response.show();
                 })
-                .fail(function() {
-                    response.addClass('responseMessage error');
-                });
-            response.empty();
-            response.append("Server Response Message");
-            response.show();
         }
     }
 
