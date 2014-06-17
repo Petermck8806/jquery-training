@@ -119,7 +119,7 @@
 
             button.prop('disabled',true);
             select.prop('disabled',true);
-            response.removeClass('responseMessage');
+            response.removeClass();
 
             $('#checkoutButtonContainer img').show();
             $.post("http://localhost:9000/api/library/checkout", { bookId: bookId, userId: userId})

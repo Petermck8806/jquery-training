@@ -175,10 +175,19 @@ function onSubmit(){
 
            })
         .done(function(data){
+            var response = $('.responseMessage');
+            response.removeClass();
+            response.empty();
 
+            if(data.status){
+                response.addClass('responseMessage success');
+            }
+            else {
+                response.addClass('responseMessage error');
+            }
+
+            response.append(data.message);
             toggleInput(false.toString());
-            alert("Recieved: " + data.message);
-
         });
 }
 
