@@ -59,15 +59,17 @@
                 var tdStatus = data.data[i].isCheckedOut == true ? "<td class='status'></td>"
                     : "<td class='status available'></td>";
 
-                var row = "<tr data-bookid='" + data.data[i].id + "'><td><a href='#' onclick='selectBook("
-                + data.data[i].id
-                + ")'>" + data.data[i].title + "</a></td>"
+                var row = "<tr data-bookid='" + data.data[i].id + "'><td><a href='#'>"
+                + data.data[i].title + "</a></td>"
                 + "<td>" + data.data[i].author + "</td>"
                 + "<td>" + data.data[i].year + "</td>"
                 + tdStatus + "</tr>";
 
                 $('#booksTable tbody').append(row);
             }
+
+            //add onClick to containing table
+            $('#booksTable').on('click','tr',selectBook);
             $('#booksTable').show();
             $("#booksTable").tablesorter({
                 headers: {
@@ -94,7 +96,9 @@
         });
     });
 
-    function selectBook(bookId){
+    function selectBook(){
+        var bookId = $(this).attr('data-bookid');
+
         $('#booksTable tr').removeClass('selected');
         $("tr[data-bookid='" + bookId + "']").addClass('selected');
 
