@@ -62,41 +62,27 @@
     </footer>
 <script>
 
-    //pmckinney function to load users on doc ready.
-    $( function() {
-        var xhr = $.getJSON("http://localhost:9000/api/users");
-        xhr.done(function(data){
+    function checkInBook(bookId){
 
-            //for each user, create a new table row in the userTable
-            for(var i = 0; i < data.data.length; i++){
-                var newRow = "<tr data-userid='" + data.data[i].id + "'>"
-                    + "<td><a href='#' onclick='displayUser(" + data.data[i].id + ");'>"
-                    + data.data[i].userName + "</a></td>"
-                    + "<td>" + data.data[i].lastName + "</td>"
-                    + "<td>" + data.data[i].firstName + "</td>"
-                    + "<td>" + data.data[i].bookCount + "</td></tr>";
-                $('#userTable tbody').append(newRow);
-            }
-            //display the user table and call tablesorter plugin
-            $('#userTable').show();
-            $('#userTable').tablesorter();
-        });
-    });
+        var userId = $('.selected').attr('data-userid');
 
+        //POST a check in.
+        $.post("http://localhost:9000/api/library/checkin", { id: bookId })
+            .done(function(){
+                $("li[data-bookid='" + bookId + "']").remove();
 
-   //displays the spinner icon once the checkin button is clicked. Removes the
-   //book from the user's book list.
-   function OnCheckInClick(bookId,userId){
-       //remove the link from the checkin div and append the spinner image
-       var li = $("li[data-bookid='" + bookId + "'] div").last();
-       li.empty().append("<img src='../img/spinner.gif'>");
+                var counts = $("tr[data-userid='" + userId + "'] td").last();
+                var updatedCount = counts.text() - 1;
 
-       checkInBook(bookId,userId);
-   }
-
+                counts.empty();
+                counts.append(updatedCount);
+            });
+    };
 
    //displays user information on link click of the username
-   function displayUser(userId){
+   function displayUser(){
+        var userId = $(this).attr('data-userid');
+
         var xhr = $.getJSON("http://localhost:9000/api/users/" + userId);
         xhr.done(function(data){
 
@@ -110,8 +96,67 @@
             $('.email').empty().append(data.data.email);
             $('.birthday').empty().append(data.data.birthday);
 
-            //set user image based on gender
-            switch(data.data.gender){
+            setGender(data.data.gender);
+
+            //add books to user information section
+            var list = $('.books dd ul');
+            list.empty();
+
+            //attach click method to containing element
+            list.on("click",'li a', OnCheckInClick);
+
+            for(var i = 0; i < data.data.books.length; i++){
+                var newLi = "<li data-bookid='" + data.data.books[i].id + "'><div class='title'>"
+                    + data.data.books[i].title + "</div><div class='checkin'><a href='#'>Check In</a></div></li>";
+
+                list.append(newLi);
+            }
+            //display userinfo section.
+            $('#userInfo').show();
+        });
+    }
+
+
+    //pmckinney function to load users on doc ready.
+    $( function() {
+        var xhr = $.getJSON("http://localhost:9000/api/users");
+        xhr.done(function(data){
+
+            //for each user, create a new table row in the userTable
+            for(var i = 0; i < data.data.length; i++){
+                var newRow = "<tr data-userid='" + data.data[i].id + "'>"
+                    + "<td><a href ='#'>" + data.data[i].userName + "<\a></td>"
+                    + "<td>" + data.data[i].lastName + "</td>"
+                    + "<td>" + data.data[i].firstName + "</td>"
+                    + "<td>" + data.data[i].bookCount + "</td></tr>";
+
+                $('#userTable tbody').append(newRow);
+                //$('#userTable tbody').on("click","tr[data-userid='" + data.data[i].id +"']","displayUser(" + data.data[i].id + ")");
+            }
+
+            $('#userTable').on('click','tr',displayUser);
+            //display the user table and call tablesorter plugin
+            $('#userTable').show();
+            $('#userTable').tablesorter();
+        });
+    });
+
+
+   //displays the spinner icon once the checkin button is clicked. Removes the
+   //book from the user's book list.
+   function OnCheckInClick(){
+       var bookId = $(this).parent().parent().attr('data-bookid');
+
+       //remove the link from the checkin div and append the spinner image
+       var li = $("li[data-bookid='" + bookId + "'] div").last();
+       li.empty().append("<img src='../img/spinner.gif'>");
+
+       checkInBook(bookId);
+   }
+
+   function setGender(gender){
+                   //set user image based on gender
+            switch(gender){
                 case "Male":
                     $('figure img').attr("src","./img/user-male-48x48.png");
                     break;
@@ -122,37 +167,7 @@
                     $('figure img').attr("src","./img/question-48x48.png");
                     break;
             }
-
-
-            //add books to user information section
-            var list = $('.books dd ul');
-            list.empty();
-
-            for(var i = 0; i < data.data.books.length; i++){
-                list.append("<li data-bookid='" + data.data.books[i].id + "'><div class='title'>"
-                    + data.data.books[i].title + "</div><div class='checkin'><a href='#' onclick='OnCheckInClick("
-                            + data.data.books[i].id + "," + data.data.id + ");'>Check In</a></div></li>");
-            }
-            //display userinfo section.
-            $('#userInfo').show();
-        });
-    }
-
-
-    function checkInBook(bookId, userId){
-        //POST a check in.
-
-        $.post("http://localhost:9000/api/library/checkin", { id: bookId })
-            .done(function(){
-                $("li[data-bookid='" + bookId + "']").remove();
-
-                var counts = $("tr[data-userid='" + userId + "'] td").last();
-                var updatedCount = counts.text() - 1;
-
-                counts.empty();
-                counts.append(updatedCount);
-            });
-    };
+   }
 
 </script>
 </body>
