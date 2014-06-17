@@ -10,12 +10,21 @@
   $.fn.tableSingleSelection = function(){
     this.config = $.extend(true,{},defaults,options);
 
-    var table = this.children('table');
+    var table = null;
 
-    if(table.length == 0 ) return this;
+    //if selector is not a table, find inner table
+    if(!this.is('table')){
+      table = this.children('table');
 
-    //other wise find the element in the table and
-    //apply the selected class to the containing row.
+      //do nothing and return if not table found
+      if (table.length == 0) return this;
+    }
+    //we are a table, use it
+    else{
+      table = this;
+    }
+
+    table.children(targetSelector).addClass('selected');
 
     return this;
   };
