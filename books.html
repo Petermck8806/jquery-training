@@ -4,6 +4,7 @@
     <title>Books</title>
     <script src="./js/jquery-1.11.1.js"></script>
     <script src="./js/jquery.tablesorter.js"></script>
+    <script src="./js/tableSingleSelection.plugin.js"></script>
     <link href="css/site.css" rel="stylesheet">
     <link href="css/books.css" rel="stylesheet">
     <link href="css/tablesorter.theme.default.css" rel="stylesheet">
@@ -69,7 +70,7 @@
             }
 
             //add onClick to containing table
-            $('#booksTable').on('click','tr',selectBook);
+            //$('#booksTable').on('click','tr',selectBook);
             $('#booksTable').show();
             $("#booksTable").tablesorter({
                 headers: {
@@ -97,10 +98,7 @@
     });
 
     function selectBook(){
-        var bookId = $(this).attr('data-bookid');
-
-        $('#booksTable tr').removeClass('selected');
-        $("tr[data-bookid='" + bookId + "']").addClass('selected');
+        var bookId = $('.' + this.selectedClass).attr('data-bookid');
 
         if( $("tr[data-bookid='" + bookId + "'] td").last().hasClass('status available')){
             $('button').removeAttr('disabled');
@@ -163,6 +161,7 @@
         type: 'text'
     });
 
+    $('#booksTable').tableSingleSelection({onSelected: selectBook})
 
 </script>
 </body>

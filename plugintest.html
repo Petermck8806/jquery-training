@@ -1,0 +1,113 @@
+
+<html>
+
+<head>
+	<title>Plugin Test</title>
+
+	<style>
+		.selected {
+			background-color: yellow;
+		}
+
+        .redRow {
+            background-color: red;
+        }
+	</style>
+
+</head>
+
+<body>
+
+
+<table border="1">
+	<thead>
+		<tr>
+			<th>Column A</th>
+			<th>Column B</th>
+			<th>Column C</th>
+			<th>Column D</th>
+		</tr>
+	<thead>
+	<tbody>
+		<tr>
+			<td>Value A</td>
+			<td><a href='#'>Value B</a></td>
+			<td>Value C</td>
+			<td><button>Value D</button></td>
+		</tr>
+		<tr>
+			<td>Value A</td>
+			<td><a href='#'>Value B</a></td>
+			<td>Value C</td>
+			<td><button>Value D</button></td>
+		</tr>
+		<tr>
+			<td>Value A</td>
+			<td><a href='#'>Value B</a></td>
+			<td>Value C</td>
+			<td><button>Value D</button></td>
+		</tr>
+		<tr>
+			<td>Value A</td>
+			<td><a href='#'>Value B</a></td>
+			<td>Value C</td>
+			<td><button>Value D</button></td>
+		</tr>
+	</tbody>
+</table>
+<hr/>
+<div style="outline:1px solid #333; padding: 10px 0;">
+<h2>In Div</h2>
+<table border="1">
+
+</div>
+
+	<thead>
+		<tr>
+			<th>Column A</th>
+			<th>Column B</th>
+			<th>Column C</th>
+			<th>Column D</th>
+		</tr>
+	<thead>
+	<tbody>
+		<tr>
+			<td>Value A</td>
+			<td><a href='#'>Value B</a></td>
+			<td>Value C</td>
+			<td><button>Value D</button></td>
+		</tr>
+		<tr>
+			<td>Value A</td>
+			<td><a href='#'>Value B</a></td>
+			<td>Value C</td>
+			<td><button>Value D</button></td>
+		</tr>
+		<tr>
+			<td>Value A</td>
+			<td><a href='#'>Value B</a></td>
+			<td>Value C</td>
+			<td><button>Value D</button></td>
+		</tr>
+		<tr>
+			<td>Value A</td>
+			<td><a href='#'>Value B</a></td>
+			<td>Value C</td>
+			<td><button>Value D</button></td>
+		</tr>
+	</tbody>
+</table>
+
+
+<script src="js/jquery-1.11.1.js"></script>
+<script src="./js/tableSingleSelection.plugin.js"></script>
+
+<script>
+    $('table').tableSingleSelection({onSelected: function() {
+        console.log('SELECTED');
+    }});
+</script>
+</body>
+
+
+</html>
